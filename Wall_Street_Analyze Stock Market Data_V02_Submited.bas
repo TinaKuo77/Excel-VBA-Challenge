@@ -9,15 +9,13 @@ ws.Cells(1, 11).Value = "Yearly_Change"
 ws.Cells(1, 12).Value = "Percent_Change"
 ws.Cells(1, 13).Value = "Total_Stock_Volume"
 ws.Range("J1:M1").Font.Bold = True
-ws.Range("P2:P4").Font.Bold = True
-ws.Range("Q1:R1").Font.Bold = True
 ws.UsedRange.EntireColumn.AutoFit
 ws.UsedRange.EntireRow.AutoFit
 
 
 Dim Ticker_Name As String
 Dim Yearly_Change As Double
-Dim Percent_Change As String
+Dim Percent_Change As Double
 Dim Total_Stock_Volume As Long
 
 'Set the inital
@@ -59,9 +57,10 @@ For i = 2 To Lastrow
         If Open_Price <> 0 Then
             Percent_Change = (Yearly_Change / Open_Price) * 100
          Else
-            Percent_Change = " 0% "
+            Percent_Change = 0
          End If
-        ws.Range("L" & Sum_Table_Row).Value = (CStr(Percent_Change) & "%")
+        ws.Range("L" & Sum_Table_Row).Value = Percent_Change
+        ws.Range("L" & Sum_Table_Row).NumberFormat = "0.00%"
         
         ' Set the total stock volume
         Stock_Volume = Stock_Volume + ws.Cells(i, 7).Value
